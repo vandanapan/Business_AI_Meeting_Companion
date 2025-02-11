@@ -17,9 +17,9 @@ my_credentials = {
     "url"    : "https://us-south.ml.cloud.ibm.com"
 }
 params = {
-        GenParams.MAX_NEW_TOKENS: 600, # The maximum number of tokens that the model can generate in a single run.
+        GenParams.MAX_NEW_TOKENS: 300, # The maximum number of tokens that the model can generate in a single run.
         GenParams.TEMPERATURE: 0.1,
-           # A parameter that controls the randomness of the token generation. A lower value makes the generation more deterministic, while a higher value introduces more randomness.
+        GenParams.REPETITION_PENALTY: 1.1,   # A parameter that controls the randomness of the token generation. A lower value makes the generation more deterministic, while a higher value introduces more randomness.
     }
 
 LLAMA2_model = Model(
@@ -34,8 +34,10 @@ llm = WatsonxLLM(LLAMA2_model)
 #######------------- Prompt Template-------------####
 
 temp = """
+
 List the key points with details from the context: 
-The context : {context} 
+[INST] The context : {context} [/INST] 
+<</SYS>>
 """
 
 pt = PromptTemplate(
